@@ -30,7 +30,7 @@ def get_action():
 
     resp = MessagingResponse()
 
-    if body == 'riddikulus' or 'ridiculous':
+    if body == 'riddikulus':
         dw = diceware.handle_options(['-w' 'en_securedrop'])
         passphrase = diceware.get_passphrase(dw)
         resp.message(passphrase)
@@ -39,7 +39,7 @@ def get_action():
     else:
         numbers = re.findall('\d', body)
         if any(elem in numbers for elem in blacklist) or len(numbers) % 5 > 0:
-            resp.message('Value out of range. Please try again. Send `parseltongue` to get a Diceware generated passphrase. Send `roll` to use dice and send results to perform lookup.')
+            resp.message('Value out of range. Please try again. Send `riddikulus` to get a Diceware generated passphrase. Send `roll` to use dice and send results to perform lookup.')
         else:
             passphrase = []
             dicerolls = []
@@ -61,50 +61,3 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
 
-
-            # passphrase = []
-            # dicerolls = action.split()
-            # for number_set in dicerolls:
-            #     word_result = wordlist_dict[number_set]
-            #     passphrase.append(word_result)
-            # complete_passphrase = ' '.join(passphrase)
-            # resp.message(complete_passphrase)
-
-
-
-
-# check for valid chars
-# regex for numbers only in a string
-# split numbers into fives
-# total rolls = count
-# word rolls = count divided by 5 - must be a whole number
-
-# from flask import Flask, request
-# from twilio.rest import TwilioRestClient
-# import twilio.twiml
-
-# import game
-
-# account_sid = "ACXXXXXXXXXXXXXXXXX"
-# auth_token = "YYYYYYYYYYYYYYYYYY"
-# twilio_client = TwilioRestClient(account_sid, auth_token)
-
-# app = Flask(__name__)
-
-# games = {}
-
-# @app.route("/", methods=['GET', 'POST'])
-# def accept_response():
-#     from_number = request.values.get('From')
-#     body = request.values.get('Body')
-
-#     try:
-#         games[from_number].queue.put(body)
-#     except KeyError:
-#         games[from_number] = game.Game(twilio_client, from_number, "your number goes here")
-#         games[from_number].start()
-
-#     return str(twilio.twiml.Response())
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
