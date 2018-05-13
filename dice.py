@@ -17,6 +17,9 @@ wordlist.close()
 
 blacklist = '0987abcdefghijklmnopqrstuvwxyz'
 
+@app.route("/", methods=['GET', 'POST'])
+def hello():
+    return("Hello World")
 
 @app.route("/sms", methods=['GET', 'POST'])
 def get_action():
